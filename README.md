@@ -1,2 +1,2 @@
-# AngularJSDirectivesFundamentals
-AngularJS Directives Fundamentals
+# AngularJS Directives Fundamentals
+Learning about AngularJS Directives
