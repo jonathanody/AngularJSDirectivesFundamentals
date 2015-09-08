@@ -10,8 +10,9 @@
     <script src="scripts/script.js"></script>
 </head>
     
-<body ng-controller="mainCtrl">
-    <user-info-card></user-info-card>
+<body ng-controller="mainCtrl" class="container" style="padding-top: 30px;">
+    <user-info-card user="user1" collapsed="true"></user-info-card>
+    <user-info-card user="user2"></user-info-card>
 </body>
     
 </html>
