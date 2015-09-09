@@ -6,12 +6,13 @@
     <script src="scripts/bootstrap.min.js"></script>
     <script src="scripts/angular.min.js"></script>
     
-    <link href="content/style.css" rel="stylesheet"/>
+    <link href="content/style.css" />
     <script src="scripts/script.js"></script>
 </head>
     
-<body ng-controller="mainCtrl">
-    
+<body ng-controller="mainCtrl" my-click="clickHandler(data)">
+    <h1>Hello</h1>
+    <h2>{{data.message}}</h2>
 </body>
     
 </html>

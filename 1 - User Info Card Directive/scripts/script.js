@@ -12,7 +12,8 @@ angular.module('app').controller('mainCtrl', function($scope) {
             'Han',
             'Leia',
             'Chewbacca'
-        ]
+        ],
+        level: 0
     };  
     
     $scope.user2 = {
@@ -26,8 +27,28 @@ angular.module('app').controller('mainCtrl', function($scope) {
             'Han',
             'Leia',
             'Chewbacca'
-        ]
+        ],
+        level: 1
     };   
+});
+
+angular.module('app').directive('stateDisplay', function() {
+    return {
+        link: function(scope, el, attrs) {
+            var params = attrs['stateDisplay'].split(' ');
+            var linkVar = params[0];
+            var classes = params.slice(1);
+            
+            
+            scope.$watch(
+                linkVar,
+                function(newValue) {
+                    el.removeClass(classes.join(' '));
+                    el.addClass(classes[newValue]);
+                }
+            );                        
+        }
+    }
 });
 
 angular.module('app').directive('userInfoCard', function() {
@@ -54,6 +75,11 @@ angular.module('app').directive('userInfoCard', function() {
                 if (idx > -1) {
                     $scope.user.friends.splice(idx, 1);
                 }
+            };
+            
+            $scope.nextState = function() {
+                $scope.user.level++;
+                $scope.user.level = $scope.user.level % 4;                            
             };
         }
     } 
