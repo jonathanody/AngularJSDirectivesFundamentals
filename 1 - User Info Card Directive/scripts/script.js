@@ -1,7 +1,7 @@
 angular.module('app', []);
 
 angular.module('app').controller('mainCtrl', function($scope) {
-    $scope.user1 = {
+    $scope.person1 = {
         name: 'Luke Skywalker',
         address: {
             street: 'PO Box 123',
@@ -16,7 +16,7 @@ angular.module('app').controller('mainCtrl', function($scope) {
         level: 0
     };  
     
-    $scope.user2 = {
+    $scope.person2 = {
         name: 'Han Solo',
         address: {
             street: 'PO Box 123',
@@ -29,7 +29,17 @@ angular.module('app').controller('mainCtrl', function($scope) {
             'Chewbacca'
         ],
         level: 1
-    };   
+    }; 
+    
+    $scope.droid1 = {
+        name: 'R2-D2',
+        specifications: {
+            manufacturer: 'Industrial Automation',
+            type: 'Astromech',
+            productLine: 'R2 Series'
+        },
+        level: 0
+    }
 });
 
 angular.module('app').directive('stateDisplay', function() {
@@ -51,36 +61,68 @@ angular.module('app').directive('stateDisplay', function() {
     }
 });
 
-angular.module('app').directive('userInfoCard', function() {
+angular.module('app').directive('userPanel', function() {
     return {
-        templateUrl: "userInfoCard.html",
         restrict: "E",
+        transclude: true,
+        templateUrl: "userPanel.html",
         scope: {
-            user: '=', // uses the user attribute contents to dictate what goes into $scope.user on the isolated scope
-            initialCollapsed: '@collapsed' // uses the value passed in from the collapsed attribute. Data can only be passed in as a string            
-        }, // isolated scope
+            name: "@",
+            level: "=",
+            initialCollapsed: "@collapsed"
+        },
         controller: function($scope) {
             $scope.collapsed = ($scope.initialCollapsed === 'true');
-            
-            $scope.knightMe = function(user) {
-                user.rank = "knight";
-            };
             
             $scope.collapse = function() {
                 $scope.collapsed = !$scope.collapsed;
             };    
             
-            $scope.removeFriend = function(friend) {
-                var idx = $scope.user.friends.indexOf(friend);
-                if (idx > -1) {
-                    $scope.user.friends.splice(idx, 1);
-                }
+            $scope.nextState = function(evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                
+                $scope.level++;
+                $scope.level = $scope.level % 4;                            
             };
+        }
+    } 
+});
+
+angular.module('app').directive('droidInfoCard', function() {
+    return {
+        templateUrl: "droidInfoCard.html",
+        restrict: "E",
+        scope: {
+            droid: '=', // uses the person attribute contents to dictate what goes into $scope.user on the isolated scope
+            initialCollapsed: '@collapsed' // uses the value passed in from the collapsed attribute. Data can only be passed in as a string            
+        }, // isolated scope
+        controller: function($scope) {
             
-            $scope.nextState = function() {
-                $scope.user.level++;
-                $scope.user.level = $scope.user.level % 4;                            
-            };
+        }
+    } 
+});
+
+angular.module('app').directive('personInfoCard', function() {
+    return {
+        templateUrl: "personInfoCard.html",
+        restrict: "E",
+        scope: {
+            person: '=', // uses the person attribute contents to dictate what goes into $scope.user on the isolated scope
+            initialCollapsed: '@collapsed' // uses the value passed in from the collapsed attribute. Data can only be passed in as a string            
+        }, // isolated scope
+        controller: function($scope) {            
+            
+            $scope.knightMe = function(person) {
+                person.rank = "knight";
+            };            
+            
+            $scope.removeFriend = function(friend) {
+                var idx = $scope.person.friends.indexOf(friend);
+                if (idx > -1) {
+                    $scope.person.friends.splice(idx, 1);
+                }
+            };                    
         }
     } 
 });
