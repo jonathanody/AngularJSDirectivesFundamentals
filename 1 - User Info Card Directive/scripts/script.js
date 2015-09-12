@@ -111,6 +111,8 @@ angular.module('app').directive('personInfoCard', function() {
             person: '=', // uses the person attribute contents to dictate what goes into $scope.user on the isolated scope
             initialCollapsed: '@collapsed' // uses the value passed in from the collapsed attribute. Data can only be passed in as a string            
         }, // isolated scope
+        //controllerAs: "vm", // use the controller as syntax within a directive
+        //bindToController: true, // bind all values to the controller instead of to $scope. Allows you to refernce 'this.' instead of '$scope'
         controller: function($scope) {            
             
             $scope.knightMe = function(person) {
